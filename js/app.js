@@ -4,10 +4,11 @@ define([
   'jquery',
   'marionette',
   'router',
+  'config',
   'views/nav',
   'views/user/login-dialog',
 ],
-function($, Marionette, AppRouter, NavView, LoginDialogView){
+function($, Marionette, AppRouter, config, NavView, LoginDialogView){
 
   window.App = new Backbone.Marionette.Application();
 
@@ -33,7 +34,7 @@ function($, Marionette, AppRouter, NavView, LoginDialogView){
       }
 
       // CORS
-      options.url = 'http://api.kr1ptr.local' + options.url;
+      options.url = config.apiUrl + options.url;
       jqXHR.setRequestHeader('X-JWT-Auth-Token', KR1PTR.get_jwt());
     });
   });
