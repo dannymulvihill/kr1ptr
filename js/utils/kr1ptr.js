@@ -1,92 +1,87 @@
 
 var KR1PTR = {
 	key: null,
-	key_timer: '',
-	key_timer_count: 0,
-	encrypt_fields: {pass: true, encrypted_notes: true},
+	keyTimer: '',
+	keyTimerCount: 0,
+	cryptFields: ['#pass', '#encrypted_notes'],
+	cryptState: 'encrypt',
 
-	check_for_key: function(mode) {
-		if (typeof this.key == 'undefined' || this.key === null) {
-			$('#'+mode+'_form').dialog('open');
+	keyCheck: function() {
+		if (_.isNull(this.key)) {
+			var form = (this.cryptState == 'encrypt') ? '#decrypt_form' : '#encrypt_form';
+			$(form).dialog('open');
 			return false;
 		}
 		return true;
 	},
 
-	decrypt: function(field_id) {
-		if (this.check_for_key('decrypt')) {
-			var input = field_id.substr(7); // cut off the unlock_
-			var other = field_id.substr(2); // cut off the un
+	toggleCryptState: function() {
+		// first things first, see if we have the encryption key
+		if (this.keyCheck()) {
+			// toggle state value
+			this.cryptState = (this.cryptState == 'encrypt') ? 'decrypt' : 'encrypt';
 
-			if ($('#'+input).val().length > 0) {
-				$('#'+input).val(Aes.Ctr.decrypt( $('#'+input).val(), this.key, 128)).removeClass('hide');
-			}
-			else {
-				$('#'+input).removeClass('hide');
-			}
+			// encrypt/decrypt fields
+			_.each(this.cryptFields, function(field) {
+				var text   = $(field).val();
+				if (text.length > 0) {
+					var result = Aes.Ctr[KR1PTR.cryptState](text, KR1PTR.key, 128);
+					$(field).val(result);
+				}
+			});
 
-			$('#'+field_id).addClass('hide');
-			$('#'+other).removeClass('hide');
-			$('#decrypt_form').dialog('close');
-
-			this.start_timer();
-
-			this.encrypt_fields[input] = false;
+			this.setCryptView();
 		}
 	},
 
-	encrypt: function(field_id) {
-		if (this.check_for_key('encrypt')) {
-			var input = field_id.substr(5); // cut off the lock_
+	setCryptView: function() {
+		// update DOM view state
+		switch (this.cryptState) {
+			case 'encrypt':
+				$('.decrypted').hide();
+				$('.encrypted').show();
+				break;
 
-			if ($('#'+input).val().length > 0) {
-				$('#'+input).val(Aes.Ctr.encrypt( $('#'+input).val(), this.key, 128)).addClass('hide');
-			}
-			else {
-				$('#'+input).addClass('hide');
-			}
-
-			$('#'+field_id).addClass('hide');
-			$('#un'+field_id).removeClass('hide');
-			$('#encrypt_form').dialog('close');
-
-			this.encrypt_fields[input] = true;
+			case 'decrypt':
+				$('.encrypted').hide();
+				$('.decrypted').show();
+				break;
 		}
 	},
 
-	start_timer: function() {
-		if (this.key_timer_count <= 0) {
-			this.store_key();
-			this.key_timer_count = 60;
-			this.key_timer = setInterval("KR1PTR.timer()", 1000);
+	startTimer: function() {
+		if (this.keyTimerCount <= 0) {
+			this.storeKey();
+			this.keyTimerCount = 60;
+			this.keyTimer = setInterval("KR1PTR.timer()", 1000);
 		}
 	},
 
-	store_key: function() {
+	storeKey: function() {
 		this.key = $('#decrypt_key').val();
 		$('#decrypt_key').val('');
 	},
 
-	kill_key: function() {
+	killKey: function() {
 		$('#encrypt_key').val('');
 		$('#decrypt_key').val('');
-		clearTimeout(this.key_timer);
-		this.key_timer_count = 0;
-		delete this.key;
+		clearTimeout(this.keyTimer);
+		this.keyTimerCount = 0;
+		this.key = null;
 	},
 
 	timer: function() {
 		// decrement the timer count
-		--this.key_timer_count;
-		if (this.key_timer_count < 0) {
+		--this.keyTimerCount;
+		if (this.keyTimerCount < 0) {
 			// unset the recurring timer
-			clearInterval(this.key_timer);
+			clearInterval(this.keyTimer);
 
 			// if any fields are left decrypted, encrypt them
-			this.encrypt_all();
+			this.toggleCryptState();
 
 			// set time count back to 0 and unset the encryption key
-			this.kill_key();
+			this.killKey();
 
 			// clear the onscreen timer
 			$('#timer').html('');
@@ -95,7 +90,7 @@ var KR1PTR = {
 			return;
 		}
 
-		$('#timer').html(this.key_timer_count);
+		$('#timer').html(this.keyTimerCount);
 	},
 
 	// all this stuff should be moved to a class specifically for authentication

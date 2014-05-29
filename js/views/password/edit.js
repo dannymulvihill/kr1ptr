@@ -20,14 +20,18 @@ function(Marionette, PasswordModel, passwordTemplate){
       'click #save_btn': 'savePassword',
       'click #cancel_btn': 'cancelEdit',
       'click #delete_btn': 'confirmPasswordDelete',
-      'click #decrypt_btn, #unlock_pass, #unlock_encrypted_notes': 'decryptAll',
-      'click #encrypt_btn, #lock_pass, #lock_encrypted_notes': 'encryptAll',
+      'click #decrypt_btn, #unlock_pass, #unlock_encrypted_notes': 'cryptState',
+      'click #encrypt_btn, #lock_pass, #lock_encrypted_notes': 'cryptState',
     },
 
     editPassword: function() {
       this.setViewMode('edit');
 
       $('#name').focus();
+    },
+
+    cryptState: function() {
+      KR1PTR.toggleCryptState();
     },
 
     savePassword: function() {
@@ -74,22 +78,6 @@ function(Marionette, PasswordModel, passwordTemplate){
       Backbone.history.navigate('passwords', { trigger: true });
     },
 
-    decryptAll: function() {
-      _.each(KR1PTR.encrypt_fields, function(encrypted, field) {
-        if (encrypted) {
-          KR1PTR.decrypt('unlock_'+field);
-        }
-      });
-    },
-
-    encryptAll: function() {
-      _.each(this.encrypt_fields, function(encrypted, field) {
-        if (!encrypted) {
-          KR1PTR.encrypt('lock_'+field);
-        }
-      });
-    },
-
     setViewMode: function(mode) {
 
       switch (mode) {
@@ -123,37 +111,21 @@ function(Marionette, PasswordModel, passwordTemplate){
       }
     },
 
-    setEncryptedState: function(state) {
-      switch (state) {
-        case 'encrypted':
-          $('.decrypted').hide();
-          $('.encrypted').show();
-          break;
-
-        case 'decrypted':
-          $('.encrypted').hide();
-          $('.decrypted').show();
-          break;
-        }
-    },
-
     onShow: function() {
-      var view = this;
-
       if (this.model.isNew()){
         KR1PTR.encrypt_fields = {pass: false, encrypted_notes: false};
 
         $('.title').html('Add New Password');
 
         this.setViewMode('add');
-        this.setEncryptedState('encrypted');
+        KR1PTR.setCryptView();
 
         $('#name').focus();
       }
       else {
         $('.title').html('View/Edit Password');
         this.setViewMode('view');
-        this.setEncryptedState('encrypted');
+        KR1PTR.setCryptView();
       }
 
       $('#decrypt_form').dialog({
@@ -165,10 +137,9 @@ function(Marionette, PasswordModel, passwordTemplate){
         draggable: false,
         buttons: {
           decrypt: function() {
-            KR1PTR.key = $('#decrypt_key').val();
-            view.setEncryptedState('decrypted');
-            view.decryptAll();
-
+            KR1PTR.startTimer();
+            KR1PTR.toggleCryptState();
+            $(this).dialog('close');
           },
           cancel: function() {
             $(this).dialog('close');
@@ -186,8 +157,8 @@ function(Marionette, PasswordModel, passwordTemplate){
         buttons: {
           encrypt: function() {
             KR1PTR.key = $('#encrypt_key').val();
-            view.setEncryptedState('encrypted');
-            view.encryptAll();
+            KR1PTR.toggleCryptState();
+            $(this).dialog('close');
           },
           cancel: function() {
             $(this).dialog('close');
