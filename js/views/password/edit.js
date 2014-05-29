@@ -118,6 +118,7 @@ function(Marionette, PasswordModel, passwordTemplate){
         $('.title').html('Add New Password');
 
         this.setViewMode('add');
+        KR1PTR.cryptState = 'decrypt';
         KR1PTR.setCryptView();
 
         $('#name').focus();
@@ -125,6 +126,7 @@ function(Marionette, PasswordModel, passwordTemplate){
       else {
         $('.title').html('View/Edit Password');
         this.setViewMode('view');
+        KR1PTR.cryptState = 'encrypt';
         KR1PTR.setCryptView();
       }
 
