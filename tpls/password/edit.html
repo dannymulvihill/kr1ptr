@@ -1,0 +1,85 @@
+<div id="password_detail_header">
+	<h3 class="title"></h3>
+	<div class="form_buttons">
+		<input type="button" value="decrypt" id="decrypt_btn" class="encrypted"/>
+		<input type="button" value="encrypt" id="encrypt_btn" class="decrypted"/>
+		<input type="button" value="edit" 	 id="edit_btn" 	  class="view_mode"/>
+		<input type="button" value="save" 	 id="save_btn" 	  class="edit_mode add_mode"/>
+		<input type="button" value="cancel"  id="cancel_btn"  class="edit_mode add_mode"/>
+		<input type="button" value="delete"  id="delete_btn"  class="view_mode"/>
+	</div>
+	<div class="clear"></div>
+</div>
+
+<table class="edit_view">
+	<tr>
+		<td class="label_td"><label for="name">Name</label></td>
+		<td class="info_td">
+			<input type="text" name="name" id="name" value="<%= name %>" class="text_input" disabled="disabled"/>
+		</td>
+
+		<td class="label_td"><label for="host">Host</label></td>
+		<td class="info_td">
+			<input type="text" name="host" id="host" value="<%= host %>" class="host_input edit_mode add_mode" disabled="disabled"/>
+			<a href="<%= host %>" id="host_link" class="view_mode" target="blank"><%= host %></a>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="label_td"><label for="user">Username</label></td>
+		<td class="info_td">
+			<input type="text" name="user" id="user" value="<%= username %>" class="text_input" disabled="disabled"/>
+		</td>
+
+		<td class="label_td"><label for="pass">Password</label></td>
+		<td class="info_td">
+			<input type="text" name="pass" id="pass" value="<%= password %>" class="text_input decrypted" disabled="disabled"/>
+			<div class="encrypted" id="unlock_pass" title="decrypt"><img src="/assets/img/closed-lock.png" width="16" /></div>
+			<div class="decrypted" id="lock_pass" title="encrypt"><img src="/assets/img/closed-lock.png" width="16" /></div>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="label_td"><label for="notes">Notes</label></td>
+		<td class="info_td">
+			<textarea name="notes" id="notes" class="text_input" disabled="disabled"><%= notes %></textarea>
+		</td>
+
+		<td class="label_td"><label for="encrypted_notes">Encrypted Notes</label></td>
+		<td class="info_td">
+			<textarea name="encrypted_notes" id="encrypted_notes" class="text_input decrypted" disabled="disabled"><%= encrypted_notes %></textarea>
+			<div class="encrypted" id="unlock_encrypted_notes" title="decrypt"><img src="/assets/img/closed-lock.png" width="16" /></div>
+			<div class="decrypted" id="lock_encrypted_notes" title="encrypt"><img src="/assets/img/closed-lock.png" width="16" /></div>
+		</td>
+	</tr>
+
+	<tr>
+		<td class="label_td"><label for="key">Password Date/Age</label></td>
+		<td class="info_td">
+			<span><%= updated_at %></span>
+		</td>
+
+		<td class="label_td"><label for="key">Alert After</label></td>
+		<td class="info_td">
+			<select name="alert_after" id="alert_after" class="edit_mode add_mode">
+				<option value="30">30 days</option>
+				<option value="60">60 days</option>
+				<option value="90">90 days</option>
+			</select>
+			<span id="alert_after_text" class="view_mode">30 days</span>
+		</td>
+	</tr>
+</table>
+
+<div id="decrypt_form" title="Enter Secret Key to Decrypt">
+	<label for="decrypt_key">Decryption Key</label>
+	<input type="password" name="decrypt_key" id="decrypt_key" />
+</div>
+<div id="encrypt_form" title="Enter Secret Key to Encrypt">
+	<label for="encrypt_key">Encryption Key</label>
+	<input type="password" name="encrypt_key" id="encrypt_key" />
+</div>
+<div id="delete_confirmation" title="Delete this Password?">
+	<p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+	This record will be permanently deleted and cannot be recovered. Are you sure?</p>
+</div>
