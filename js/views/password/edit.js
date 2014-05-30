@@ -158,7 +158,6 @@ function(Marionette, PasswordModel, passwordTemplate){
         draggable: false,
         buttons: {
           encrypt: function() {
-            KR1PTR.key = $('#encrypt_key').val();
             KR1PTR.toggleCryptState();
             $(this).dialog('close');
           },
