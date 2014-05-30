@@ -17,13 +17,6 @@ function(Marionette, PasswordCollection, PasswordItemView, passwordCollectionTem
 
     template: _.template(passwordCollectionTemplate),
 
-    onRender: function(){
-      $('.list_view').dataTable({
-        "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
-        "iDisplayLength": -1,
-      });
-    },
-
     onSync: function(){
       this.collection.renderModel();
     }

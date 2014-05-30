@@ -91,7 +91,13 @@ function(
 
     listPasswords: function(){
       var passwordCompositeView = new PasswordCompositeView();
-      passwordCompositeView.collection.fetch();
+      var dataTable = function() {
+        $('.list_view').dataTable({
+          "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+          "iDisplayLength": -1,
+        });
+      }
+      passwordCompositeView.collection.fetch({success : dataTable});
       window.App.contentRegion.show(passwordCompositeView);
     },
 
