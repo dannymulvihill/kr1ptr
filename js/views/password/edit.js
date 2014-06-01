@@ -35,7 +35,6 @@ function(Marionette, PasswordModel, passwordTemplate){
     },
 
     savePassword: function() {
-      // make sure record is encrypted before saving or that the password/notes fields are empty
       if (KR1PTR.cryptState == 'encrypt' || ($('#pass').val() == '' && $('#encrypted_notes').val() == '')) {
         var parent = this;
         this.model.save({
