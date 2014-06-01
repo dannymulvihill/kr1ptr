@@ -34,7 +34,7 @@ function(Marionette, generatePasswordTemplate){
 
       var password = '';
 
-      for (var i = length; i >= 0; i--) {
+      for (var i = length; i > 0; i--) {
         password += chars[Math.floor(Math.random()*chars.length)];
       };
 
