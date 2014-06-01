@@ -18,6 +18,7 @@ var KR1PTR = {
 	toggleCryptState: function() {
 		// first things first, see if we have the encryption key
 		if (this.keyCheck()) {
+
 			// toggle state value
 			this.cryptState = (this.cryptState == 'encrypt') ? 'decrypt' : 'encrypt';
 
@@ -52,14 +53,15 @@ var KR1PTR = {
 	startTimer: function() {
 		if (this.keyTimerCount <= 0) {
 			this.storeKey();
-			this.keyTimerCount = 60;
+			this.keyTimerCount = 5;
 			this.keyTimer = setInterval("KR1PTR.timer()", 1000);
 		}
 	},
 
 	storeKey: function() {
-		this.key = $('#decrypt_key').val();
-		$('#decrypt_key').val('');
+		var key_field = (this.cryptState == 'decrypt') ? '#decrypt_key' : '#encrypt_key';
+		this.key = $(key_field).val();
+		$(key_field).val('');
 	},
 
 	killKey: function() {
@@ -77,8 +79,10 @@ var KR1PTR = {
 			// unset the recurring timer
 			clearInterval(this.keyTimer);
 
-			// if any fields are left decrypted, encrypt them
-			this.toggleCryptState();
+			// if current state is decrypted, encrypt everything again
+			if (this.cryptState == 'decrypt'){
+				this.toggleCryptState();
+			}
 
 			// set time count back to 0 and unset the encryption key
 			this.killKey();
