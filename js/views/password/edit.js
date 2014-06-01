@@ -20,8 +20,8 @@ function(Marionette, PasswordModel, passwordTemplate){
       'click #save_btn': 'savePassword',
       'click #cancel_btn': 'cancelEdit',
       'click #delete_btn': 'confirmPasswordDelete',
-      'click #decrypt_btn, #unlock_pass, #unlock_encrypted_notes': 'cryptState',
-      'click #encrypt_btn, #lock_pass, #lock_encrypted_notes': 'cryptState',
+      'click #decrypt_btn, #unlock_pass, #unlock_encrypted_notes': 'toggleCryptState',
+      'click #encrypt_btn, #lock_pass, #lock_encrypted_notes': 'toggleCryptState',
     },
 
     editPassword: function() {
@@ -30,33 +30,41 @@ function(Marionette, PasswordModel, passwordTemplate){
       $('#name').focus();
     },
 
-    cryptState: function() {
+    toggleCryptState: function() {
       KR1PTR.toggleCryptState();
     },
 
     savePassword: function() {
-      var parent = this;
-      this.model.save({
-          name:            $("#name").val(),
-          host:            $("#host").val(),
-          username:        $("#user").val(),
-          password:        $("#pass").val(),
-          notes:           $("#notes").val(),
-          encrypted_notes: $("#encrypted_notes").val(),
-        },
-        {
-          success: function(model, response) {
-            if (response.error) {
-              // error alert
-            }
-            else {
-              parent.setViewMode('view');
-            }
+      // make sure record is encrypted before saving
+      if (KR1PTR.cryptState == 'encrypt') {
+        var parent = this;
+        this.model.save({
+            name:            $("#name").val(),
+            host:            $("#host").val(),
+            username:        $("#user").val(),
+            password:        $("#pass").val(),
+            notes:           $("#notes").val(),
+            encrypted_notes: $("#encrypted_notes").val(),
           },
-          error: function(model, response) {
-            console.log('error');
-          }
-      });
+          {
+            success: function(model, response) {
+              if (response.error) {
+                // error alert
+              }
+              else {
+                parent.setViewMode('view');
+                Backbone.history.navigate('/passwords/'+response.id);
+              }
+            },
+            error: function(model, response) {
+              console.log('error');
+            }
+        });
+      }
+      else {
+        KR1PTR.toggleCryptState();
+        this.savePassword();
+      }
     },
 
     cancelEdit: function() {
@@ -158,6 +166,8 @@ function(Marionette, PasswordModel, passwordTemplate){
         draggable: false,
         buttons: {
           encrypt: function() {
+            //KR1PTR.key = $('#encrypt_key').val();
+            KR1PTR.startTimer();
             KR1PTR.toggleCryptState();
             $(this).dialog('close');
           },
@@ -188,13 +198,13 @@ function(Marionette, PasswordModel, passwordTemplate){
       $('#decrypt_key').keypress(function(e){
         if (e.keyCode === $.ui.keyCode.ENTER){
           KR1PTR.key = $('#decrypt_key').val();
-          KR1PTR.decrypt_all();
+          KR1PTR.toggleCryptState();
         }
       })
       $('#encrypt_key').keypress(function(e){
         if (e.keyCode === $.ui.keyCode.ENTER){
           KR1PTR.key = $('#encrypt_key').val();
-          KR1PTR.encrypt_all();
+          KR1PTR.toggleCryptState();
         }
       })
     }
