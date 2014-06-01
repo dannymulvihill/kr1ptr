@@ -16,20 +16,19 @@ function(Marionette, UserModel, loginTemplate){
 			e.preventDefault();
 
 			$.post('/login', $('#login_form').serialize(), function(data){
+
 				var response = $.parseJSON(data);
 
 				if (response.error) {
-					$('#error_msg').html('Authentication Failed. Please try email and password again.');
+					$('#error_msg').html('Authentication Failed. Try Again.');
+					return;
 				}
 				else {
 					KR1PTR.store_jwt(response);
-					//Backbone.history.navigate('/passwords', { trigger: true });
+						$('#session_timeout').dialog('close');
+		        window.App.dialogRegion.close();
 
-	        $('#session_timeout').dialog('close');
-	        window.App.dialogRegion.close();
-
-	        //Backbone.history.navigate(Backbone.history.fragment, { trigger: true });
-	        Backbone.history.loadUrl();
+		        Backbone.history.loadUrl();
 				}
 			});
     },
@@ -40,11 +39,12 @@ function(Marionette, UserModel, loginTemplate){
     	if (KR1PTR.is_jwt_expired()) {
 	      $('#session_timeout').dialog({
 	        autoOpen: true,
-	        height: 200,
+	        height: 270,
 	        width: 300,
 	        modal: true,
 	        resizable: false,
 	        draggable: false,
+	        closeOnEscape: false,
 	        buttons: {
 	          login: function(e) {
 	            view.loginUser(e);
@@ -57,8 +57,9 @@ function(Marionette, UserModel, loginTemplate){
 	        },
 	      });
 	    }
-    }
 
+	    $('#email').focus();
+    },
   });
 
   return LoginDialogView;

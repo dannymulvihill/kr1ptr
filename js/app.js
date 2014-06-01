@@ -18,17 +18,23 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
     dialogRegion: '#dialog',
   });
 
+  App.addInitializer(function(){
+    appRouter = new AppRouter();
+    appRouter.initialize();
+  });
+
   // Enable CORS support and JWT Auth Checking
   App.addInitializer(function(){
     $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
 
-      // need to check jwt expiration settings
       if (options.url != '/login') {
-
+        // need to check jwt expiration settings
         if (KR1PTR.is_jwt_expired()){
-          var loginDialogView = new LoginDialogView();
-          window.App.dialogRegion.show(loginDialogView);
-
+          var isOpen = $('#session_timeout').dialog('isOpen');
+          if (!isOpen) {
+            var loginDialogView = new LoginDialogView();
+            window.App.dialogRegion.show(loginDialogView);
+          }
           jqXHR.abort();
         }
       }
@@ -50,11 +56,6 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
     });
   });
 
-  App.addInitializer(function(){
-    appRouter = new AppRouter();
-    appRouter.initialize();
-  });
-
   App.on('initialize:after', function(){
     Backbone.history.start({pushState: true});
 
@@ -62,7 +63,6 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
     $(document).on("click", "a[href^='/']", function(event) {
       if (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
         event.preventDefault();
-
 
         // need the jwt auth check stuff here too
         if (KR1PTR.is_jwt_expired()){
@@ -75,6 +75,13 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
       }
     });
 
+    if (Backbone.history.fragment != '') {
+      // need to check jwt expiration settings - this will trigger the logic upon hard page refreshes
+      if (KR1PTR.is_jwt_expired()){
+        var loginDialogView = new LoginDialogView();
+        window.App.dialogRegion.show(loginDialogView);
+      }
+    }
   });
 
   return App;

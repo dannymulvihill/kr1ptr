@@ -289,6 +289,9 @@ button, .ui-button-text {
 	padding-right: 8px;
 	cursor: pointer;
 }
+button.ui-state-focus span {
+	color: #47a211;
+}
 .ui-dialog,
 .ui-button {
 	outline: none;
@@ -300,6 +303,7 @@ button, .ui-button-text {
 .ui-widget-header {
 	background: #000 !important;
 }
+.ui-dialog-titlebar-close {display: none !important;}
 
 input[type=submit]:hover,
 input[type=button]:hover,
@@ -330,20 +334,24 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 	width: 300px;
 	padding: 20px 5px;
 }
-#login input[type=text],
-#login input[type=password] {
+#login_form input[type=text],
+#login_form input[type=password] {
 	border: solid 1px #333;
 	padding: 4px 8px;
 	font-size: 14px;
 	height: 25px;
 	color: 	#47a211;
-	margin-right: 5px;
+	margin: 5px;
 }
-#login input[type=submit] {
+#login_form input[type=submit] {
 	height: 35px;
 	position: relative; top: -1px;
 }
-
+#error_msg {
+	padding: 5px;
+	font-size: 13px;
+	color: red;
+}
 
 /* FOOTER */
 #footer {

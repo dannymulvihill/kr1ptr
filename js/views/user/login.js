@@ -22,13 +22,17 @@ function(Marionette, UserModel, loginTemplate){
 				var response = $.parseJSON(data);
 
 				if (response.error) {
-					$('#error_msg').html('Authentication Failed. Please try email and password again.');
+					$('#error_msg').html('Authentication Failed. Try Again.');
 				}
 				else {
 					KR1PTR.store_jwt(response);
 					Backbone.history.navigate('/passwords', { trigger: true });
 				}
 			});
+    },
+
+    onShow: function() {
+    	$('#email').focus();
     },
 
   });
