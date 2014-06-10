@@ -25,7 +25,7 @@ function(Marionette, UserModel, loginTemplate){
 					$('#error_msg').html('Authentication Failed. Try Again.');
 				}
 				else {
-					KR1PTR.store_jwt(response);
+					App.Auth.store_jwt(response);
 					Backbone.history.navigate('/passwords', { trigger: true });
 				}
 			});

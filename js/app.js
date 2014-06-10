@@ -29,13 +29,7 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
     $.ajaxPrefilter( function( options, originalOptions, jqXHR ) {
 
       if (options.url != '/login') {
-        // need to check jwt expiration settings
-        if (App.Auth.is_jwt_expired()){
-          var isOpen = $('#session_timeout').dialog('isOpen');
-          if (!isOpen) {
-            var loginDialogView = new LoginDialogView();
-            window.App.dialogRegion.show(loginDialogView);
-          }
+        if (!App.Auth.isAuthed()){
           jqXHR.abort();
         }
       }
@@ -65,11 +59,7 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
       if (!event.altKey && !event.ctrlKey && !event.metaKey && !event.shiftKey) {
         event.preventDefault();
 
-        // need the jwt auth check stuff here too
-        if (App.Auth.is_jwt_expired()){
-          var loginDialogView = new LoginDialogView();
-          window.App.dialogRegion.show(loginDialogView);
-        }
+        App.Auth.isAuthed();
 
         var url = $(event.currentTarget).attr("href").replace(/^\//, "");
         Backbone.history.navigate(url, { trigger: true });
@@ -78,30 +68,11 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
 
     if (Backbone.history.fragment != '') {
       // need to check jwt expiration settings - this will trigger the logic upon hard page refreshes
-      if (App.Auth.is_jwt_expired()){
-        // really need to abstract this out!
-        var loginDialogView = new LoginDialogView();
-        window.App.dialogRegion.show(loginDialogView);
-      }
+      App.Auth.isAuthed();
     }
   });
 
   App.module("KR1PTR", function(KR1PTR, App, Backbone, Marionette, $, _){
-    // Private Data And Functions
-    var privateData = "this is private data";
-
-    var privateFunction = function(){
-        console.log(privateData);
-    }
-
-    // Public Data And Functions
-    KR1PTR.someData = "public data";
-
-    KR1PTR.someFunction = function(){
-        privateFunction();
-        console.log(KR1PTR.someData);
-    }
-
     this.key = null;
     this.keyTimer = '';
     this.keyTimerCount = 0;
@@ -182,7 +153,7 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
         clearInterval(this.keyTimer);
 
         // if current state is decrypted, encrypt everything again
-        if (this.cryptState == 'decrypt'){
+        if (this.cryptState == 'decrypt' && Backbone.history.fragment == '/password'){
           this.toggleCryptState();
         }
 
@@ -221,6 +192,19 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
 
       if (now < exp) {
         return false;
+      }
+      else {
+        return true;
+      }
+    }
+
+    this.isAuthed = function() {
+      if (this.is_jwt_expired()){
+        if ( $('#session_timeout').dialog('isOpen') !== true ) {
+          var loginDialogView = new LoginDialogView();
+          App.dialogRegion.show(loginDialogView);
+          return false;
+        }
       }
       else {
         return true;

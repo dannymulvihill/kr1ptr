@@ -175,7 +175,6 @@ function(Marionette, PasswordModel, passwordTemplate){
         buttons: {
           delete: function() {
             App.contentRegion.currentView.deletePassword();
-            $(this).dialog('close');
           },
           cancel: function() {
             $(this).dialog('close');
@@ -189,14 +188,21 @@ function(Marionette, PasswordModel, passwordTemplate){
           App.KR1PTR.toggleCryptState();
           $('#decrypt_form').dialog('close');
         }
-      })
+      });
+
       $('#encrypt_key').keypress(function(e){
         if (e.keyCode === $.ui.keyCode.ENTER){
           App.KR1PTR.startTimer();
           App.KR1PTR.toggleCryptState();
           $('#encrypt_form').dialog('close');
         }
-      })
+      });
+    },
+
+    onClose: function() {
+      $('#decrypt_form').dialog('destroy').remove();
+      $('#encrypt_form').dialog('destroy').remove();
+      $('#delete_confirmation').dialog('destroy').remove();
     }
 
   });
