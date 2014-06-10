@@ -86,35 +86,20 @@ function(Marionette, PasswordModel, passwordTemplate){
     },
 
     setViewMode: function(mode) {
-
-      switch (mode) {
-        case 'edit':
-          $('.add_mode, .view_mode').hide();
-          $('.edit_mode').show();
-          // save current values in case user cancels we can reset them
-          //KR1PTR.bkup_values = {};
-          $('input[disabled=disabled], textarea[disabled=disabled]').each(function(){
-            //KR1PTR.bkup_values[this.id] = $(this).val();
-            $(this).removeAttr('disabled');
-          });
-          break;
-
-        case 'view':
-          $('.edit_mode, .add_mode').hide();
-          $('.view_mode').show();
-
-          $('input[type=text], textarea').each(function(){
-            $(this).attr('disabled', 'disabled');
-          });
-          break;
-
-        case 'add':
-          $('.edit_mode, .view_mode').hide();
-          $('.add_mode').show();
-          $('input[disabled=disabled], textarea[disabled=disabled]').each(function(){
-            $(this).removeAttr('disabled');
-          });
-          break;
+      // hide all the buttons/inputs/spans with mode_tgl class, then show the ones we want
+      $('.mode_tgl').hide();
+      $('.' + mode + '_mode').show();
+      if ( mode == 'view' ) {
+        // Disable input and textares for view mode
+        $('input[type=text], textarea').each(function(){
+          $(this).attr('disabled', 'disabled');
+        });
+      }
+      else {
+        // enable input and textareas for add/edit
+        $('input[disabled=disabled], textarea[disabled=disabled]').each(function(){
+          $(this).removeAttr('disabled');
+        });
       }
     },
 

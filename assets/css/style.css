@@ -324,6 +324,10 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 ::webkit-selection{ background-color: #47a211; color: white; }
 
 
+.mode_tgl {
+	display: none;
+}
+
 /* LOGIN */
 #login {
 	width: 600px;
