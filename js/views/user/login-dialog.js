@@ -12,12 +12,9 @@ function(Marionette, UserModel, loginTemplate){
     template: _.template(loginTemplate),
 
     loginUser: function(e) {
-    	console.log('loginUser');
 			e.preventDefault();
 
 			$.post('/login', $('#login_form').serialize(), function(data){
-				console.log('post');
-				console.log($('#login_form').serialize());
 				var response = $.parseJSON(data);
 
 				if (response.error) {
