@@ -22,6 +22,8 @@ function(Marionette, PasswordModel, passwordTemplate){
       'click #encrypt_btn, #lock_pass, #lock_encrypted_notes': 'toggleCryptState',
     },
 
+    viewMode: '',
+
     editPassword: function() {
       this.setViewMode('edit');
 
@@ -34,7 +36,7 @@ function(Marionette, PasswordModel, passwordTemplate){
 
     savePassword: function() {
       if (App.KR1PTR.cryptState == 'encrypt' || ($('#pass').val() == '' && $('#encrypted_notes').val() == '')) {
-        var parent = this;
+        var self = this;
         this.model.save({
             name:            $("#name").val(),
             host:            $("#host").val(),
@@ -49,8 +51,11 @@ function(Marionette, PasswordModel, passwordTemplate){
                 // error alert
               }
               else {
-                parent.setViewMode('view');
-                Backbone.history.navigate('/passwords/'+response.id);
+                if (self.viewMode == 'add') {
+                  Backbone.history.navigate('/passwords/'+response.id);
+                }
+
+                self.setViewMode('view');
               }
             },
             error: function(model, response) {
@@ -84,6 +89,8 @@ function(Marionette, PasswordModel, passwordTemplate){
     },
 
     setViewMode: function(mode) {
+      this.viewMode = mode;
+
       // hide all the buttons/inputs/spans with mode_tgl class, then show the ones we want
       $('.mode_tgl').hide();
       $('.' + mode + '_mode').show();
