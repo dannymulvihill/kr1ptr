@@ -24,7 +24,7 @@ function(Marionette, UserModel, loginTemplate){
 					return;
 				}
 				else {
-					KR1PTR.store_jwt(response);
+					App.Auth.store_jwt(response);
 						$('#session_timeout').dialog('close');
 		        window.App.dialogRegion.close();
 
@@ -36,7 +36,7 @@ function(Marionette, UserModel, loginTemplate){
     onShow: function() {
     	var view = this;
 
-    	if (KR1PTR.is_jwt_expired()) {
+    	if (App.Auth.is_jwt_expired()) {
 	      $('#session_timeout').dialog({
 	        autoOpen: true,
 	        height: 270,

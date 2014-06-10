@@ -5,8 +5,6 @@ define([
   'models/password',
   'text!tpls/password/edit.html',
   'jqueryui',
-  'aes',
-  'kr1ptr',
   ],
 function(Marionette, PasswordModel, passwordTemplate){
 
@@ -31,11 +29,11 @@ function(Marionette, PasswordModel, passwordTemplate){
     },
 
     toggleCryptState: function() {
-      KR1PTR.toggleCryptState();
+      App.KR1PTR.toggleCryptState();
     },
 
     savePassword: function() {
-      if (KR1PTR.cryptState == 'encrypt' || ($('#pass').val() == '' && $('#encrypted_notes').val() == '')) {
+      if (App.KR1PTR.cryptState == 'encrypt' || ($('#pass').val() == '' && $('#encrypted_notes').val() == '')) {
         var parent = this;
         this.model.save({
             name:            $("#name").val(),
@@ -61,7 +59,7 @@ function(Marionette, PasswordModel, passwordTemplate){
         });
       }
       else {
-        KR1PTR.toggleCryptState();
+        App.KR1PTR.toggleCryptState();
         this.savePassword();
       }
     },
@@ -105,21 +103,21 @@ function(Marionette, PasswordModel, passwordTemplate){
 
     onShow: function() {
       if (this.model.isNew()){
-        KR1PTR.encrypt_fields = {pass: false, encrypted_notes: false};
+        App.KR1PTR.encrypt_fields = {pass: false, encrypted_notes: false};
 
         $('.title').html('Add New Password');
 
         this.setViewMode('add');
-        KR1PTR.cryptState = 'decrypt';
-        KR1PTR.setCryptView();
+        App.KR1PTR.cryptState = 'decrypt';
+        App.KR1PTR.setCryptView();
 
         $('#name').focus();
       }
       else {
         $('.title').html('View/Edit Password');
         this.setViewMode('view');
-        KR1PTR.cryptState = 'encrypt';
-        KR1PTR.setCryptView();
+        App.KR1PTR.cryptState = 'encrypt';
+        App.KR1PTR.setCryptView();
       }
 
       $('#decrypt_form').dialog({
@@ -131,8 +129,8 @@ function(Marionette, PasswordModel, passwordTemplate){
         draggable: false,
         buttons: {
           decrypt: function() {
-            KR1PTR.startTimer();
-            KR1PTR.toggleCryptState();
+            App.KR1PTR.startTimer();
+            App.KR1PTR.toggleCryptState();
             $(this).dialog('close');
           },
           cancel: function() {
@@ -150,9 +148,9 @@ function(Marionette, PasswordModel, passwordTemplate){
         draggable: false,
         buttons: {
           encrypt: function() {
-            //KR1PTR.key = $('#encrypt_key').val();
-            KR1PTR.startTimer();
-            KR1PTR.toggleCryptState();
+            //App.KR1PTR.key = $('#encrypt_key').val();
+            App.KR1PTR.startTimer();
+            App.KR1PTR.toggleCryptState();
             $(this).dialog('close');
           },
           cancel: function() {
@@ -181,14 +179,14 @@ function(Marionette, PasswordModel, passwordTemplate){
 
       $('#decrypt_key').keypress(function(e){
         if (e.keyCode === $.ui.keyCode.ENTER){
-          KR1PTR.key = $('#decrypt_key').val();
-          KR1PTR.toggleCryptState();
+          App.KR1PTR.key = $('#decrypt_key').val();
+          App.KR1PTR.toggleCryptState();
         }
       })
       $('#encrypt_key').keypress(function(e){
         if (e.keyCode === $.ui.keyCode.ENTER){
-          KR1PTR.key = $('#encrypt_key').val();
-          KR1PTR.toggleCryptState();
+          App.KR1PTR.key = $('#encrypt_key').val();
+          App.KR1PTR.toggleCryptState();
         }
       })
     }
