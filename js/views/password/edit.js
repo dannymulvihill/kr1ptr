@@ -155,7 +155,6 @@ function(Marionette, PasswordModel, passwordTemplate){
         draggable: false,
         buttons: {
           encrypt: function() {
-            //App.KR1PTR.key = $('#encrypt_key').val();
             App.KR1PTR.startTimer();
             App.KR1PTR.toggleCryptState();
             $(this).dialog('close');
@@ -186,14 +185,16 @@ function(Marionette, PasswordModel, passwordTemplate){
 
       $('#decrypt_key').keypress(function(e){
         if (e.keyCode === $.ui.keyCode.ENTER){
-          App.KR1PTR.key = $('#decrypt_key').val();
+          App.KR1PTR.startTimer();
           App.KR1PTR.toggleCryptState();
+          $('#decrypt_form').dialog('close');
         }
       })
       $('#encrypt_key').keypress(function(e){
         if (e.keyCode === $.ui.keyCode.ENTER){
-          App.KR1PTR.key = $('#encrypt_key').val();
+          App.KR1PTR.startTimer();
           App.KR1PTR.toggleCryptState();
+          $('#encrypt_form').dialog('close');
         }
       })
     }
