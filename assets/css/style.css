@@ -7,13 +7,25 @@ body {
 	padding: 0;
 }
 
-.centerviewport {
-	margin: 10% auto;
-	width: 600px;
+/* Bootstrap 3 overrides */
+#content .container-fluid {
+	padding: 0px;
 }
+.container-fluid {
+	padding: 0px 5px;
+}
+.navbar {
+	margin-bottom: 0px !important;
+}
+.navbar-brand {
+	padding: 9px 4px;
+	margin-right: 12px;
+	margin-left: 10px !important;
+}
+/* End Bootstrap 3 overrides */
 
 #content {
-	margin: 40px 0px 30px;
+	margin: 50px 0px 30px;
 	width: 100%;
 	clear: both;
 }
@@ -65,6 +77,7 @@ h3.title {
 	padding: 10px 15px;
 	height: 15px;
 	color: #eee;
+	font-size: 14px;
 }
 .list_view,
 .detail_view,
@@ -123,33 +136,15 @@ ul {
 	-webkit-margin-end: 0px;
 	-webkit-padding-start: 0px;
 }
-
-ul.nav {
-	display:block;
-	width: 100%;
-	height: 40px;
-	border-bottom: solid 1px #555;
-	position: fixed;
-	top: 0px;
-	background: rgba(20, 20, 20, .8);
-}
-
 ul.nav li {
-	display: block;
-	padding: 0px 20px;
-	float: left;
 	font-size: 15px;
-}
-
-ul.nav li#timer,
-ul.nav li.profile {
-	float: right;
 }
 
 ul.nav li a:link,
 ul.nav li a:visited {
 	text-decoration: none;
 	color: #fff;
+	height: 50px;
 }
 
 ul.nav li a:hover {
@@ -158,28 +153,47 @@ ul.nav li a:hover {
 ul.nav li img {
 	padding-top: 4px;
 }
+
 ul.nav li.list_pw a,
 ul.nav li.add_pw a,
 ul.nav li.gen_pw a,
 ul.nav li.profile a,
 ul.nav li#timer {
 	display: block;
-	padding: 10px 5px 10px 35px;
+	padding: 15px 10px 15px 45px;
 }
+.in ul.nav li.profile {
+	float: left;
+}
+.in ul.nav li#timer {
+	display: none;
+}
+
 ul.nav li.list_pw a {
-	background: url(../img/glyphicons/glyphicons_114_list_green.png) no-repeat left;
+	background: url(../img/glyphicons/glyphicons_114_list_green.png) no-repeat 12px;
 }
 ul.nav li.add_pw a {
-	background: url(../img/glyphicons/glyphicons_044_keys_green.png) no-repeat left;
+	background: url(../img/glyphicons/glyphicons_044_keys_green.png) no-repeat 12px;
 }
 ul.nav li.gen_pw a {
-	background: url(../img/glyphicons/glyphicons_139_adjust_alt_green.png) no-repeat left;
+	background: url(../img/glyphicons/glyphicons_139_adjust_alt_green.png) no-repeat 12px;
 }
-ul.nav li.profile a {
-	background: url(../img/glyphicons/glyphicons_034_old_man_green.png) no-repeat left;
+ul.nav li.profile a.dropdown-toggle {
+	background: url(../img/glyphicons/glyphicons_034_old_man_green.png) no-repeat 12px;
 }
+ul.nav li#timer,
 ul.nav li.profile {
 	padding-right: 8px;
+	float: right;
+}
+
+ul.dropdown-menu {
+	background: #121212;
+	color: #ccc;
+}
+ul.dropdown-menu li a:hover,
+ul.dropdown-menu li.active a {
+	background: #333;
 }
 .error_msg {
 	font-size: 11px;
@@ -277,8 +291,8 @@ input[type=password] {
 
 input[type=submit],
 input[type=button],
-button, .ui-button-text {
-	height: 25px;
+button.ui-button,
+.ui-button-text {
 	background: #222 !important;
 	border: solid 1px #333 !important;
 	border-radius: 3px !important;
@@ -288,6 +302,10 @@ button, .ui-button-text {
 	padding-left: 8px;
 	padding-right: 8px;
 	cursor: pointer;
+}
+input[type=submit],
+input[type=button] {
+	height: 25px;
 }
 button.ui-state-focus span {
 	color: #47a211;
@@ -434,3 +452,5 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 	font-weight: bold;
 	padding: 20px;
 }
+
+

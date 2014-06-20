@@ -8,6 +8,7 @@ define([
   'views/nav',
   'views/user/login-dialog',
   'aes',
+  'bootstrap',
 ],
 function($, Marionette, AppRouter, config, NavView, LoginDialogView){
 
@@ -63,6 +64,17 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
 
         var url = $(event.currentTarget).attr("href").replace(/^\//, "");
         Backbone.history.navigate(url, { trigger: true });
+
+        // update the active tab in nav
+        $('ul.nav li').removeClass('active');
+        $(this).parent().addClass('active');
+      }
+    });
+
+    // This deals with collapsing the mobile style nav when navigating via the links within it
+    $(document).on('click','.navbar-collapse.in',function(e) {
+      if( $(e.target).is('a') ) {
+          $(this).collapse('hide');
       }
     });
 
@@ -209,6 +221,12 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
       else {
         return true;
       }
+    }
+
+    this.logout = function() {
+      //localStorage.removeItem('kr1ptr_jwt');
+      //localStorage.removeItem('kr1ptr_exp');
+      Backbone.history.navigate('/', { trigger: true });
     }
   });
 

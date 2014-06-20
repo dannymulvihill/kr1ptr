@@ -13,7 +13,6 @@ require.config({
 		text: 'libs/require/text',
 		tpls: '/tpls',
 		aes: 'utils/aes',
-		kr1ptr: 'utils/kr1ptr',
 	},
 	shim: {
 		backbone: {
@@ -33,9 +32,6 @@ require.config({
 	    bootstrap: {
 	    	deps: ['jquery'],
 	    },
-	    kr1ptr: {
-	    	deps: ['jqueryui'],
-	    }
 	},
 });
 
