@@ -138,7 +138,7 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
     this.startTimer = function() {
       if (this.keyTimerCount <= 0) {
         this.storeKey();
-        this.keyTimerCount = 5;
+        this.keyTimerCount = 60;
         this.keyTimer = setInterval("App.KR1PTR.timer()", 1000);
       }
     },
