@@ -82,6 +82,17 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
       // need to check jwt expiration settings - this will trigger the logic upon hard page refreshes
       App.Auth.isAuthed();
     }
+
+
+    $(document).keypress(function(e){
+      var regex = /^passwords\/[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+      var uri   = Backbone.history.fragment;
+
+      if (regex.test(uri) && e.keyCode == 4) {
+        App.KR1PTR.toggleCryptState();
+      }
+    });
+
   });
 
   App.module("KR1PTR", function(KR1PTR, App, Backbone, Marionette, $, _){
@@ -165,7 +176,7 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
         clearInterval(this.keyTimer);
 
         // if current state is decrypted, encrypt everything again
-        if (this.cryptState == 'decrypt' && Backbone.history.fragment == '/password'){
+        if (this.cryptState == 'decrypt' && Backbone.history.fragment == '/passwords'){
           this.toggleCryptState();
         }
 
