@@ -224,8 +224,8 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
     }
 
     this.logout = function() {
-      //localStorage.removeItem('kr1ptr_jwt');
-      //localStorage.removeItem('kr1ptr_exp');
+      localStorage.removeItem('kr1ptr_jwt');
+      localStorage.removeItem('kr1ptr_exp');
       Backbone.history.navigate('/', { trigger: true });
     }
   });
