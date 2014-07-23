@@ -1,16 +1,28 @@
 // Filename js/models/user.js
 
 define([
-  'underscore',
   'backbone'
-], function(_, Backbone){
+],
+function(Backbone){
+
   var UserModel = Backbone.Model.extend({
     defaults: {
-      firstName: 'john',
-      lastName: 'doe',
-      username: 'jdoe',
-      email: 'john@doe.com',
+      firstName: '',
+      lastName: '',
+      email: '',
+    },
+
+    urlRoot: '/profile',
+
+    parse: function(response){
+      if (_.isObject(response.data)) {
+        return response.data;
+      }
+      else {
+        return response;
+      }
     }
+
   });
 
   return UserModel;

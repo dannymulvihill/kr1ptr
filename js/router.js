@@ -4,24 +4,28 @@ define([
   'jquery',
   'marionette',
   'views/user/login',
+  'views/user/profile',
   'views/password/item',
   'views/password/edit',
   'views/password/list',
   'views/password/not-found',
   'views/password/generate',
   'models/password',
+  'models/user',
   'views/nav',
 ],
 function(
   $,
   Marionette,
   LoginView,
+  ProfileView,
   PasswordItemView,
   PasswordView,
   PasswordCompositeView,
   PasswordNotFoundView,
   GeneratePasswordView,
   PasswordModel,
+  UserModel,
   NavView
   ){
   var AppRouter = Backbone.Marionette.AppRouter.extend({
@@ -113,7 +117,26 @@ function(
     },
 
     viewProfile: function(){
-      App.contentRegion.close();
+      var profileView = new ProfileView();
+
+      //profileView.model.set({id: id});
+
+      profileView.model.fetch({
+        success: function(collection, response) {
+
+          if (response.error) {
+            /*var passwordNotFoundView = new PasswordNotFoundView();
+            App.contentRegion.show(passwordNotFoundView);*/
+          }
+          else {
+            // fetch successfully completed
+            App.contentRegion.show(profileView);
+          }
+        },
+        error: function() {
+            console.log('Failed to fetch!');
+        }
+      });
     },
 
     defaultAction: function(){

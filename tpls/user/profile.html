@@ -1,0 +1,42 @@
+<div id="profile_detail_header">
+	<h3 class="title">Edit Profile</h3>
+	<div class="form_buttons">
+		<input type="button" value="edit" 	 id="edit_btn" 	  class="mode_tgl view_mode"/>
+		<input type="button" value="save" 	 id="save_btn" 	  class="mode_tgl edit_mode"/>
+		<input type="button" value="cancel"  id="cancel_btn"  class="mode_tgl edit_mode"/>
+	</div>
+	<div class="clear"></div>
+</div>
+<div class="tbl_layout row">
+	<div class="col-sm-6">
+		<label for="first_name">First Name</label>
+		<input type="text" id="first_name" name="first_name" value="<%= first_name %>" />
+	</div>
+	<div class="col-sm-6">
+		<label for="last_name">Last Name</label>
+		<input type="text" id="last_name" name="last_name" value="<%= last_name %>" />
+	</div>
+	<div class="col-sm-6">
+		<label for="email">Email</label>
+		<input type="text" id="email" name="email" value="<%= email %>" />
+	</div>
+	<div class="col-sm-6">
+		<label>Password</label>
+		<button type="button" class="btn btn-default btn-xs" id="change_pw_btn">
+		  <span class="glyphicon glyphicon-wrench"></span> Change
+		</button>
+		<button type="button" class="btn btn-danger btn-xs" id="cancel_change_pw_btn">
+		  <span class="glyphicon glyphicon-remove"></span> Cancel
+		</button>
+		<button type="button" class="btn btn-success btn-xs" id="save_new_pw_btn" disabled>
+		  <span class="glyphicon glyphicon-ok"></span> Save
+		</button>
+
+		<div id="change_pw_form">
+			<input type="password" name="current_password" id="current_password" placeholder="current password"/>
+			<input type="password" name="new_password" id="new_password" placeholder="new password"/>
+			<input type="password" name="confirm_password" id="confirm_password" placeholder="confirm"/>
+		</div>
+
+	</div>
+</div>

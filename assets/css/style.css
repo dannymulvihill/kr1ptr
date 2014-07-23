@@ -30,9 +30,100 @@ body {
 	clear: both;
 }
 
+div.tbl_layout div {
+	padding: 8px 12px;
+	min-height: 43px;
+}
+div.tbl_layout label {
+	width: 25%;
+	padding-left: 18px;
+}
+div.tbl_layout input[type=text],
+div.tbl_layout input[type=password],
+div.tbl_layout textarea {
+	width: 70%;
+}
+
+/* smart phone & tablet */
+@media (max-width: 768px) {
+	div.tbl_layout div:nth-of-type(even) {
+		background: #232323;
+	}
+
+	div.tbl_layout div:nth-of-type(odd) input,
+	div.tbl_layout div:nth-of-type(odd) textarea,
+	div.tbl_layout div:nth-of-type(odd) select {
+		border: solid 1px #232323;
+	}
+	div.tbl_layout div:nth-of-type(even) input,
+	div.tbl_layout div:nth-of-type(even) textarea,
+	div.tbl_layout div:nth-of-type(even) select {
+		border: solid 1px #353535;
+	}
+
+	div.tbl_layout div:nth-of-type(odd) input[disabled=disabled],
+	div.tbl_layout div:nth-of-type(odd) textarea[disabled=disabled] {
+		border: solid 1px #000;
+		background: #000;
+	}
+	div.tbl_layout div:nth-of-type(even) input[disabled=disabled],
+	div.tbl_layout div:nth-of-type(even) textarea[disabled=disabled] {
+		border: solid 1px #232323;
+		background: #232323;
+	}
+}
+/* desktop */
+@media (min-width: 769px) {
+	div.tbl_layout div:nth-child(4n),
+	div.tbl_layout div:nth-child(4n-1) {
+		background: #232323;
+	}
+
+	/* odd */
+	div.tbl_layout div:nth-child(4n+1) input,
+	div.tbl_layout div:nth-child(2n) input,
+	div.tbl_layout div:nth-child(4n+1) textarea,
+	div.tbl_layout div:nth-child(2n) textarea,
+	div.tbl_layout div:nth-child(4n+1) select,
+	div.tbl_layout div:nth-child(2n) select {
+		border: solid 1px #232323;
+	}
+	/* even */
+	div.tbl_layout div:nth-child(4n) input,
+	div.tbl_layout div:nth-child(4n-1) input,
+	div.tbl_layout div:nth-child(4n) textarea,
+	div.tbl_layout div:nth-child(4n-1) textarea,
+	div.tbl_layout div:nth-child(4n) select,
+	div.tbl_layout div:nth-child(4n-1) select {
+		border: solid 1px #353535;
+	}
+
+	/* odd */
+	div.tbl_layout div:nth-child(4n+1) input[disabled=disabled],
+	div.tbl_layout div:nth-child(2n) input[disabled=disabled],
+	div.tbl_layout div:nth-child(4n+1) textarea[disabled=disabled],
+	div.tbl_layout div:nth-child(2n) textarea[disabled=disabled] {
+		border: solid 1px #000;
+		background: #000;
+	}
+	/* even */
+	div.tbl_layout div:nth-child(4n) input[disabled=disabled],
+	div.tbl_layout div:nth-child(4n-1) input[disabled=disabled],
+	div.tbl_layout div:nth-child(4n) textarea[disabled=disabled],
+	div.tbl_layout div:nth-child(4n-1) textarea[disabled=disabled] {
+		border: solid 1px #232323;
+		background: #232323;
+	}
+}
+
+
+
+
+
+
 label {
 	font-size: 11px;
-	padding: 5px 0 2px 3px;
+	padding: 5px 0 2px 5px;
 	color: #47a211;
 }
 table {
@@ -109,7 +200,8 @@ h3.title {
 	margin: 0px auto;
 }
 
-#password_detail_header {
+#password_detail_header,
+#profile_detail_header {
 	background: #232323;
 }
 .clear {clear:both;}
@@ -453,4 +545,16 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 	padding: 20px;
 }
 
+
+/* profile */
+#cancel_change_pw_btn,
+#save_new_pw_btn {
+	display: none;
+}
+#change_pw_form {
+	clear: both;
+	margin-left: 25%;
+	padding-left: 0;
+	display: none;
+}
 
