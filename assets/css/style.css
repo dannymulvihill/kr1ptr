@@ -6,6 +6,11 @@ body {
 	margin: 0;
 	padding: 0;
 }
+label {
+	font-size: 11px;
+	padding: 5px 0 2px 5px;
+	color: #47a211;
+}
 
 /* Bootstrap 3 overrides */
 #content .container-fluid {
@@ -30,87 +35,93 @@ body {
 	clear: both;
 }
 
-div.tbl_layout div {
+div.record_view div.col-sm-6 {
 	padding: 8px 12px;
 	min-height: 43px;
 }
-div.tbl_layout label {
+div.record_view label {
 	width: 25%;
 	padding-left: 18px;
+	float: left;
 }
-div.tbl_layout input[type=text],
-div.tbl_layout input[type=password],
-div.tbl_layout textarea {
+div.record_view input[type=text],
+div.record_view input[type=password],
+div.record_view textarea,
+div.record_view select,
+div.record_view span {
 	width: 70%;
+	float: left;
 }
-
+div.record_view span {
+	line-height: 25px;
+}
 /* smart phone & tablet */
 @media (max-width: 768px) {
-	div.tbl_layout div:nth-of-type(even) {
+	div.record_view div:nth-of-type(even) {
 		background: #232323;
 	}
 
-	div.tbl_layout div:nth-of-type(odd) input,
-	div.tbl_layout div:nth-of-type(odd) textarea,
-	div.tbl_layout div:nth-of-type(odd) select {
+	div.record_view div:nth-of-type(odd) input,
+	div.record_view div:nth-of-type(odd) textarea,
+	div.record_view div:nth-of-type(odd) select {
 		border: solid 1px #232323;
 	}
-	div.tbl_layout div:nth-of-type(even) input,
-	div.tbl_layout div:nth-of-type(even) textarea,
-	div.tbl_layout div:nth-of-type(even) select {
+	div.record_view div:nth-of-type(even) input,
+	div.record_view div:nth-of-type(even) textarea,
+	div.record_view div:nth-of-type(even) select {
 		border: solid 1px #353535;
 	}
 
-	div.tbl_layout div:nth-of-type(odd) input[disabled=disabled],
-	div.tbl_layout div:nth-of-type(odd) textarea[disabled=disabled] {
+	div.record_view div:nth-of-type(odd) input[disabled=disabled],
+	div.record_view div:nth-of-type(odd) textarea[disabled=disabled] {
 		border: solid 1px #000;
 		background: #000;
 	}
-	div.tbl_layout div:nth-of-type(even) input[disabled=disabled],
-	div.tbl_layout div:nth-of-type(even) textarea[disabled=disabled] {
+	div.record_view div:nth-of-type(even) input[disabled=disabled],
+	div.record_view div:nth-of-type(even) textarea[disabled=disabled] {
 		border: solid 1px #232323;
 		background: #232323;
 	}
 }
 /* desktop */
 @media (min-width: 769px) {
-	div.tbl_layout div:nth-child(4n),
-	div.tbl_layout div:nth-child(4n-1) {
+	div.record_view div:nth-child(4n),
+	div.record_view div:nth-child(4n-1) {
 		background: #232323;
 	}
 
 	/* odd */
-	div.tbl_layout div:nth-child(4n+1) input,
-	div.tbl_layout div:nth-child(2n) input,
-	div.tbl_layout div:nth-child(4n+1) textarea,
-	div.tbl_layout div:nth-child(2n) textarea,
-	div.tbl_layout div:nth-child(4n+1) select,
-	div.tbl_layout div:nth-child(2n) select {
+	div.record_view div:nth-child(4n+1) input,
+	div.record_view div:nth-child(2n) input,
+	div.record_view div:nth-child(4n+1) textarea,
+	div.record_view div:nth-child(2n) textarea,
+	div.record_view div:nth-child(4n+1) select,
+	div.record_view div:nth-child(2n) select {
 		border: solid 1px #232323;
 	}
 	/* even */
-	div.tbl_layout div:nth-child(4n) input,
-	div.tbl_layout div:nth-child(4n-1) input,
-	div.tbl_layout div:nth-child(4n) textarea,
-	div.tbl_layout div:nth-child(4n-1) textarea,
-	div.tbl_layout div:nth-child(4n) select,
-	div.tbl_layout div:nth-child(4n-1) select {
+	div.record_view div:nth-child(4n) input,
+	div.record_view div:nth-child(4n-1) input,
+	div.record_view div:nth-child(4n) textarea,
+	div.record_view div:nth-child(4n-1) textarea,
+	div.record_view div:nth-child(4n) select,
+	div.record_view div:nth-child(4n-1) select {
 		border: solid 1px #353535;
 	}
 
 	/* odd */
-	div.tbl_layout div:nth-child(4n+1) input[disabled=disabled],
-	div.tbl_layout div:nth-child(2n) input[disabled=disabled],
-	div.tbl_layout div:nth-child(4n+1) textarea[disabled=disabled],
-	div.tbl_layout div:nth-child(2n) textarea[disabled=disabled] {
+	div.record_view div:nth-child(4n+1) input[disabled=disabled],
+	div.record_view div:nth-child(2n) input[disabled=disabled],
+	div.record_view div:nth-child(4n+1) textarea[disabled=disabled],
+	div.record_view div:nth-child(2n) textarea[disabled=disabled] {
 		border: solid 1px #000;
 		background: #000;
 	}
 	/* even */
-	div.tbl_layout div:nth-child(4n) input[disabled=disabled],
-	div.tbl_layout div:nth-child(4n-1) input[disabled=disabled],
-	div.tbl_layout div:nth-child(4n) textarea[disabled=disabled],
-	div.tbl_layout div:nth-child(4n-1) textarea[disabled=disabled] {
+	div.record_view div:nth-child(4n) input[disabled=disabled],
+	div.record_view div:nth-child(4n-1) input[disabled=disabled],
+	div.record_view div:nth-child(4n) textarea[disabled=disabled],
+	div.record_view div:nth-child(4n-1) textarea[disabled=disabled] {
 		border: solid 1px #232323;
 		background: #232323;
 	}
@@ -121,11 +132,7 @@ div.tbl_layout textarea {
 
 
 
-label {
-	font-size: 11px;
-	padding: 5px 0 2px 5px;
-	color: #47a211;
-}
+
 table {
 	border-spacing: 0px;
 }
@@ -139,6 +146,7 @@ tr:nth-child(odd) td {
 tr:nth-child(even) td {
 	background: #232323;
 }
+
 tr:nth-child(odd) input,
 tr:nth-child(odd) textarea,
 tr:nth-child(odd) select {
@@ -302,6 +310,13 @@ ul.dropdown-menu li.active a {
 	box-shadow: 2px 2px #111;
 }
 
+
+
+input#pass,
+textarea#encrypted_notes {
+	width: 66%;
+}
+
 #lock_pass,
 #unlock_pass,
 #lock_encrypted_notes,
@@ -310,20 +325,21 @@ ul.dropdown-menu li.active a {
 	border: solid 1px #000;
 	border-radius: 3px;
 	background: #47a211;
+	float: left;
 }
 #lock_pass,
 #lock_encrypted_notes {
-	width: 20px;
-	height: 20px;
-	float: right;
+	width: 25px;
+	height: 25px;
 	background: red;
+	margin-left: 5px;
 }
 #unlock_pass {
 	width: 50%;
-	height: 20px;
+	height: 25px;
 }
 #unlock_encrypted_notes {
-	width: 100%;
+	width: 70%;
 	height: 40px;
 }
 #lock_pass img,
@@ -354,20 +370,13 @@ input, textarea, select, option {
 .host_input:focus {
 	border-color: #47a211 !important;
 }
-.text_input {
-	width: 90%;
-	float: left;
-}
-
-.host_input {
-	width: 90%;
-}
 
 input:focus,
 textarea:focus,
 select:focus,
 th:focus {
 	outline: none;
+	border-color: #47a211 !important;
 }
 input[disabled=disabled],
 textarea[disabled=disabled] {
