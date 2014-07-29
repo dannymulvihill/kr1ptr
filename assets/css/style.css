@@ -48,11 +48,11 @@ div.record_view input[type=text],
 div.record_view input[type=password],
 div.record_view textarea,
 div.record_view select,
-div.record_view span {
+div.record_view span.text {
 	width: 70%;
 	float: left;
 }
-div.record_view span {
+div.record_view span.text {
 	line-height: 25px;
 }
 /* smart phone & tablet */
