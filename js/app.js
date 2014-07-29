@@ -103,7 +103,7 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
     this.cryptState = 'encrypt';
 
     this.keyCheck = function() {
-      if (_.isNull(this.key)) {
+      if (_.isEmpty(App.KR1PTR.key)) {
         var form = (this.cryptState == 'encrypt') ? '#decrypt_form' : '#encrypt_form';
         $(form).dialog('open');
         return false;
@@ -112,6 +112,17 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
     },
 
     this.toggleCryptState = function() {
+      // both the encrypt and decrypt dialogs call this method when submitted
+      // if that is the case we need to grab the encryption key from them
+      var temp_key = $('#decrypt_key').val();
+      temp_key = (_.isEmpty(temp_key)) ? $('#encrypt_key').val() : temp_key;
+
+      if (!_.isEmpty(temp_key)) {
+        App.KR1PTR.key = temp_key;
+      }
+
+      delete temp_key;
+
       // first things first, see if we have the encryption key
       if (this.keyCheck()) {
 
