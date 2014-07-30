@@ -45,6 +45,8 @@ div.record_view label {
 	float: left;
 }
 div.record_view input[type=text],
+div.record_view input[type=email],
+div.record_view input[type=url],
 div.record_view input[type=password],
 div.record_view textarea,
 div.record_view select,
@@ -354,7 +356,11 @@ textarea#encrypted_notes {
 	margin-top: 12px;
 }
 
-input, textarea, select, option {
+input,
+input[disabled=disabled],
+textarea,
+select,
+option {
 	background: #121212;
 	border: solid 1px #232323;
 	border-radius: 3px;
@@ -449,7 +455,7 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 
 /* LOGIN */
 #login {
-	width: 600px;
+	width: 300px;
 	height: 300px;
 	margin: 10% auto;
 }
@@ -457,7 +463,7 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 	width: 300px;
 	padding: 20px 5px;
 }
-#login_form input[type=text],
+#login_form input[type=email],
 #login_form input[type=password] {
 	border: solid 1px #333;
 	padding: 4px 8px;
@@ -465,10 +471,11 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 	height: 25px;
 	color: 	#47a211;
 	margin: 5px;
+	width: 290px;
 }
 #login_form input[type=submit] {
-	height: 35px;
-	position: relative; top: -1px;
+	margin: 6px;
+	float: right;
 }
 #error_msg {
 	padding: 5px;
@@ -503,7 +510,7 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 }
 .dataTables_filter input {
 	margin-left: 8px;
-	width: 200px;
+	width: 100px;
 	background: #555;
 }
 .dataTables_paginate a {
@@ -539,8 +546,9 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 #generate_pw_form input {
 	float: left;
 }
-#generate_pw_form input[type=text] {
-	width: 16px;
+#generate_pw_form input[type=text],
+#generate_pw_form input[type=number] {
+	width: 50px;
 }
 #generate_btn {
 	clear: both;
