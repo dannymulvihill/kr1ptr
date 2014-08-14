@@ -84,6 +84,24 @@ div.record_view span.text {
 		border: solid 1px #232323;
 		background: #232323;
 	}
+
+	/* attempt to disable zoom on inputs with mobile devices */
+	select:focus,
+	textarea,
+	input[type="text"],
+	input[type="password"],
+	input[type="datetime"],
+	input[type="datetime-local"],
+	input[type="date"],
+	input[type="month"],
+	input[type="time"],
+	input[type="week"],
+	input[type="number"],
+	input[type="email"],
+	input[type="url"],
+	input[type="search"],
+	input[type="tel"],
+	input[type="color"] { font-size: 16px; }
 }
 /* desktop */
 @media (min-width: 769px) {
@@ -579,20 +597,3 @@ a:hover		{color: #70d30c; text-decoration: underline;}
 
 
 
-/* attempt to disable zoom on inputs with mobile devices */
-select:focus,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"] { font-size: 16px; }
