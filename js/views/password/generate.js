@@ -41,6 +41,28 @@ function(Marionette, generatePasswordTemplate){
       $('#generated_pw').html(password);
     },
 
+    onBeforeRender: function() {
+      var self = this;
+
+      $('#generate_password').dialog({
+        autoOpen: false,
+        height: 420,
+        width: 300,
+        modal: true,
+        resizable: false,
+        draggable: false,
+        buttons: {
+          generate: function() {
+            self.generatePassword();
+            $(this).dialog('close');
+          },
+          cancel: function() {
+            $(this).dialog('close');
+          }
+        },
+      });
+    }
+
   });
 
   return GeneratePasswordView;

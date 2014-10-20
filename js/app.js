@@ -7,10 +7,11 @@ define([
   'config',
   'views/nav',
   'views/user/login-dialog',
+  'views/password/generate',
   'aes',
   'bootstrap',
 ],
-function($, Marionette, AppRouter, config, NavView, LoginDialogView){
+function($, Marionette, AppRouter, config, NavView, LoginDialogView, GeneratePasswordDialogView){
 
   window.App = new Backbone.Marionette.Application();
 
@@ -63,7 +64,13 @@ function($, Marionette, AppRouter, config, NavView, LoginDialogView){
         App.Auth.isAuthed();
 
         var url = $(event.currentTarget).attr("href").replace(/^\//, "");
-        Backbone.history.navigate(url, { trigger: true });
+        if (url == 'generate') {
+          var generatePasswordDialogView = new GeneratePasswordDialogView();
+          App.dialogRegion.show(generatePasswordDialogView);
+        }
+        else {
+          Backbone.history.navigate(url, { trigger: true });
+        }
 
         // update the active tab in nav
         $('ul.nav li').removeClass('active');
